@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class PartidoController extends Controller
 {
-    public $partidos = [];
-
-    public function index()
+    public function index(Request $request)
     {
-        $partidos = Session::get('partidos', $this->partidos);
+        $partidos = $request->session()->get('partidos', [
+            ['local' => 'Barça Femenino', 'visitante' => 'Atlético de Madrid', 'fecha' => '2024-11-30', 'resultado' => ''],
+            ['local' => 'Real Madrid Femenino', 'visitante' => 'Barça Femenino', 'fecha' => '2024-12-15', 'resultado' => '0-3'],
+        ]);
+
+        $request->session()->put('partidos', $partidos);
+
         return view('partidos.index', compact('partidos'));
     }
 
@@ -26,15 +29,19 @@ class PartidoController extends Controller
             'local' => 'required|min:2',
             'visitante' => 'required|min:2|different:local',
             'fecha' => 'required|date_format:Y-m-d',
-            'resultado' => ['nullable', 'regex:/^\d+-\d+$/'],
+            'resultado' => ['nullable', 'regex:/^\d+-\d+$/']
         ], [
-            'resultado.regex' => 'El resultado debe tener el formato 0-0, por ejemplo 2-1.'
+            'required' => 'El campo :attribute es obligatorio.',
+            'min' => 'El campo :attribute debe tener al menos :min caracteres.',
+            'different' => 'El equipo visitante debe ser diferente al local.',
+            'date_format' => 'La fecha debe tener el formato Año-Mes-Día (YYYY-MM-DD).',
+            'regex' => 'El resultado debe tener el formato número-número (por ejemplo: 2-1).'
         ]);
 
-        $partidos = Session::get('partidos', $this->partidos);
+        $partidos = $request->session()->get('partidos', []);
         $partidos[] = $validated;
-        Session::put('partidos', $partidos);
+        $request->session()->put('partidos', $partidos);
 
-        return redirect()->route('partidos.index')->with('success', '¡Partido añadido correctamente!');
+        return redirect()->route('partidos.index')->with('success', 'Partido añadido correctamente.');
     }
 }

@@ -11,11 +11,9 @@ Route::resource('equipos',EquipoController::class);
 Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create');
 
 
-Route::get('/estadios', [EstadioController::class, 'index'])->name('estadios.index');
-Route::get('/estadios/create', [EstadioController::class, 'create'])->name('estadios.create');
-Route::post('/estadios', [EstadioController::class, 'store'])->name('estadios.store');
-Route::get('/estadios/{id}', [EstadioController::class, 'show'])->name('estadios.show');
-
+Route::get('/estadis', [EstadioController::class, 'index'])->name('estadios.index');
+Route::get('/estadis/crear', [EstadioController::class, 'create'])->name('estadios.create');
+Route::post('/estadis', [EstadioController::class, 'store'])->name('estadios.store');
 
 Route::get('/jugadoras', [JugadoraController::class, 'index'])->name('jugadoras.index');
 Route::get('/jugadoras/crear', [JugadoraController::class, 'create'])->name('jugadoras.create');

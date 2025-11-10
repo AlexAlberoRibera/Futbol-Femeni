@@ -1,30 +1,32 @@
 @extends('layouts.app')
-@section('title', 'Jugadoras')
+@section('title', 'Listado de Jugadoras')
 
 @section('content')
-<h1 class="text-3xl font-bold text-blue-800 mb-6">Jugadoras</h1>
+<h1 class="text-3xl font-bold text-blue-800 mb-6">Listado de Jugadoras</h1>
 
-@if(session('success'))
-<div class="bg-green-100 text-green-700 p-2 mb-4 rounded">{{ session('success') }}</div>
+@if (session('success'))
+<div class="bg-green-100 text-green-700 p-3 mb-4 rounded">
+    {{ session('success') }}
+</div>
 @endif
 
-<p class="mb-4">
-    <a href="{{ route('jugadoras.create') }}" class="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700">+ Nueva Jugadora</a>
-</p>
+<a href="{{ route('jugadoras.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4 inline-block">
+    Añadir nueva jugadora
+</a>
 
-<table class="w-full border-collapse border border-gray-300">
-    <thead class="bg-gray-200">
+<table class="min-w-full bg-white border border-gray-300 rounded shadow">
+    <thead class="bg-blue-100">
         <tr>
-            <th class="border border-gray-300 p-2">Nombre</th>
-            <th class="border border-gray-300 p-2">Equipo</th>
-            <th class="border border-gray-300 p-2">Posición</th>
+            <th class="py-2 px-4 text-left">Nombre</th>
+            <th class="py-2 px-4 text-left">Equipo</th>
+            <th class="py-2 px-4 text-left">Posición</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($jugadoras as $jugadora)
+        @foreach ($jugadoras as $jugadora)
             <x-jugadora 
-                :nombre="$jugadora['nombre']" 
-                :equipo="$jugadora['equipo']" 
+                :nombre="$jugadora['nombre']"
+                :equipo="$jugadora['equipo']"
                 :posicion="$jugadora['posicion']"
             />
         @endforeach

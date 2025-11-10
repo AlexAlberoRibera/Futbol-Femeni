@@ -21,25 +21,41 @@ class EquipoController extends Controller
 
     public function show(int $id)
     {
-        $equips = Session::get('equips', $this->equipos);
-        abort_if(!isset($equips[$id]), 404);
-        $equip = $equips[$id];
-        return view('equips.show', compact('equip'));
+        // Obtener todos los equipos de la sesión
+        $equipos = Session::get('equipos', $this->equipos);
+
+        // Si no existe el equipo con ese id, lanzar 404
+        abort_if(!isset($equipos[$id]), 404);
+
+        // Guardar el equipo específico en la variable $equipo
+        $equipo = $equipos[$id];
+
+        // Pasar $equipo a la vista
+        return view('equipos.show', compact('equipo'));
     }
 
-    public function create() { return view('equips.create'); }
+
+    public function create()
+    {
+        return view('equipos.create');
+    }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nombre'    => 'required|min:3',
+            'nombre' => 'required|min:3',
             'estadio' => 'required',
             'titulos' => 'required|integer|min:0',
         ]);
 
+        // Recuperar los equipos de sesión
         $equipos = Session::get('equipos', $this->equipos);
+
+        // Añadir el nuevo equipo
         $equipos[] = $validated;
-        Session::put('equips', $equipos);
+
+        // Guardar de nuevo en la misma clave 'equipos'
+        Session::put('equipos', $equipos);
 
         return redirect()->route('equipos.index')->with('success', 'Equipo añadido correctamente!');
     }
