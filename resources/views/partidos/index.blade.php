@@ -26,8 +26,12 @@
     <tbody>
         @foreach ($partidos as $partido)
         <tr class="hover:bg-gray-100">
-            <td class="border border-gray-300 p-2"><x-equip :nombre="$partido['local']" /></td>
-            <td class="border border-gray-300 p-2"><x-equip :nombre="$partido['visitante']" /></td>
+            <td class="border border-gray-300 p-2">
+                <x-equip :nombre="$partido['local']" />
+            </td>
+            <td class="border border-gray-300 p-2">
+                <x-equip :nombre="$partido['visitante']" />
+            </td>
             <td class="border border-gray-300 p-2">{{ $partido['fecha'] }}</td>
             <td class="border border-gray-300 p-2">{{ $partido['resultado'] ?? '-' }}</td>
         </tr>

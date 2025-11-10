@@ -2,25 +2,23 @@
 
 namespace App\View\Components;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Equipo extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
+    public $nombre;
+    public $estadio;
+    public $titulos;
+
+    public function __construct($nombre, $estadio, $titulos)
     {
-        //
+        $this->nombre = $nombre;
+        $this->estadio = $estadio;
+        $this->titulos = $titulos;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
+    public function render()
     {
-        return view('components.equipo');
+        return view('componentes.equipo');
     }
 }
