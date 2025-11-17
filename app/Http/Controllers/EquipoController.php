@@ -15,19 +15,35 @@ class EquipoController extends Controller
     ];
 
     // Listado de equipos
+        
+    /**
+     * index
+     *
+     * @return void
+     */
     public function index()
     {
         $equipos = Session::get('equipos', $this->equipos);
         return view('equipos.index', compact('equipos'));
     }
 
-    // Crear equipo
+     
+    /**
+     * create
+     *
+     * @return void
+     */
     public function create()
     {
         return view('equipos.create');
     }
-
-    // Guardar equipo
+ 
+    /**
+     * store
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([

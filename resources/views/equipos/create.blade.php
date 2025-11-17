@@ -24,7 +24,7 @@
   </div>
   <div>
     <label for="titulos" class="block font-bold">Títulos:</label>
-    <input type="number" name="titulos" id="titulos" value="{{ old('titulos') }}" class="border p-2 w-full">
+    <input type="text" name="titulos" id="titulos" value="{{ old('titulos') }}" class="border p-2 w-full">
   </div>
   <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Añadir</button>
 </form>
