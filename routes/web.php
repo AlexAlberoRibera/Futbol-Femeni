@@ -8,13 +8,10 @@ use App\Http\Controllers\PartidoController;
 
 Route::get('/',fn()=>"¡Bienvenidos a la Guia de Equipos de Futbol Fememnino!");
 Route::resource('equipos',EquipoController::class);
-Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create');
 
 
-Route::get('/estadis', [EstadioController::class, 'index'])->name('estadios.index');
-Route::get('/estadis/crear', [EstadioController::class, 'create'])->name('estadios.create');
-Route::post('/estadis', [EstadioController::class, 'store'])->name('estadios.store');
-
+Route::resource('/estadios', EstadioController::class);
+/*
 Route::get('/jugadoras', [JugadoraController::class, 'index'])->name('jugadoras.index');
 Route::get('/jugadoras/crear', [JugadoraController::class, 'create'])->name('jugadoras.create');
 Route::post('/jugadoras', [JugadoraController::class, 'store'])->name('jugadoras.store');
@@ -23,3 +20,4 @@ Route::post('/jugadoras', [JugadoraController::class, 'store'])->name('jugadoras
 Route::get('/partidos', [PartidoController::class, 'index'])->name('partidos.index');
 Route::get('/partidos/crear', [PartidoController::class, 'create'])->name('partidos.create');
 Route::post('/partidos', [PartidoController::class, 'store'])->name('partidos.store');
+*/

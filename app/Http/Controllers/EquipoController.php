@@ -2,54 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEquipRequest;
+use App\Http\Requests\UpdateEquipRequest;
+use App\Models\Equipo;
+use App\Models\Estadio;
+use App\Services\EquipService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class EquipoController extends Controller
 {
-    public $equipos = [
-        ['nombre' => 'Barça Femenino',      'estadio' => 'Camp Nou',               'titulos' => 30],
-        ['nombre' => 'Atletico de Madrid',  'estadio' => 'Cívitas Metropolitano',  'titulos' => 10],
-        ['nombre' => 'Real Madrid Femenino', 'estadio' => 'Alfredo Di Stéfano',    'titulos' => 5],
-    ];
+    public function __construct(private EquipService $servicio) {}
 
+
+    // GET /equipos
     public function index()
     {
-        $equipos = Session::get('equipos', $this->equipos);
-        return view('equipos.index', compact('equipos'));
+        return view('equipos.index', ['equipos' => $this->servicio->llistar()]);
     }
 
-   public function show(int $id)
-{
-    $equipos = Session::get('equipos', $this->equipos);
-    abort_if(!isset($equipos[$id]), 404);
-    $equipo = $equipos[$id]; // <-- guardamos en $equipo
-    return view('equipos.show', compact('equipo'));
-}
-
-
+    // GET equipos
     public function create()
     {
-        return view('equipos.create');
+        $estadios = Estadio::all();
+        return view('equipos.create', compact('estadios'));
     }
 
-    public function store(Request $request)
+    // POST /equipos
+    public function store(StoreEquipRequest $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|min:3',
-            'estadio' => 'required',
-            'titulos' => 'required|integer|min:0',
-        ]);
+        $this->servicio->guardar($request->validated());
+        return redirect()->route('equipos.index');
+    }
+    // GET /equpos/{id}
+    public function show(Equipo $equipo)
+    {
+        return view('equipos.show', compact('equipo'));
+    }
+    // GET /equips/{id}/edit
+    public function edit(Equipo $equipo) {
+        return view('equipos.edit', compact('equipo'));
+    }
 
-        // Recuperar los equipos de sesión
-        $equipos = Session::get('equipos', $this->equipos);
+    // PUT /equips/{id}/edit
+    public function update(Request $request, Equipo $equipo) {
+        $this->servicio->actualitzar($equipo, $request->validated());
+        return redirect()->route('equipos.index')->with('ok', 'Equipo actualizado');
+    }
 
-        // Añadir el nuevo equipo
-        $equipos[] = $validated;
 
-        // Guardar de nuevo en la misma clave 'equipos'
-        Session::put('equipos', $equipos);
-
-        return redirect()->route('equipos.index')->with('success', 'Equipo añadido correctamente!');
+    // DELETE /equips/{id}
+    public function destroy($id) {
+        $this->servicio->eliminar($id);
+        return redirect()->route('equipos.index');
     }
 }
