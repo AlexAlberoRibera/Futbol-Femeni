@@ -21,7 +21,7 @@ class EstadioController extends Controller
     }
 
     public function create() { 
-        return view('estadios.create',compact("estadios")); 
+        return view('estadios.create'); 
     }
 
     public function store(Request $request)

@@ -23,7 +23,7 @@ class StoreEquipRequest extends FormRequest
     {
         return [
             'nombre'    => 'required|min:3',
-            'estadio_id' => 'required|integer|exists:estadis,id',
+            'estadio_id' => 'required|integer|exists:estadios,id',
             'titulos' => 'required|integer|min:0'
         ];
     }
