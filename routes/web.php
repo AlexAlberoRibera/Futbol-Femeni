@@ -8,16 +8,20 @@ use App\Http\Controllers\PartidoController;
 
 Route::get('/',fn()=>"¡Bienvenidos a la Guia de Equipos de Futbol Fememnino!");
 Route::resource('equipos',EquipoController::class);
+Route::get('equipos/{equipo}/jugadoras', [EquipoController::class, 'jugadoras'])->name('equipos.jugadoras');
 
 
 Route::resource('/estadios', EstadioController::class);
+Route::resource('/jugadoras', JugadoraController::class);
+Route::get('jugadoras/equipo/{equipo}', [JugadoraController::class, 'porEquipo'])->name('jugadoras.porEquipo');
+
 /*
-Route::get('/jugadoras', [JugadoraController::class, 'index'])->name('jugadoras.index');
 Route::get('/jugadoras/crear', [JugadoraController::class, 'create'])->name('jugadoras.create');
 Route::post('/jugadoras', [JugadoraController::class, 'store'])->name('jugadoras.store');
+*/
 
-
-Route::get('/partidos', [PartidoController::class, 'index'])->name('partidos.index');
+Route::resource('/partidos', PartidoController::class);
+/*
 Route::get('/partidos/crear', [PartidoController::class, 'create'])->name('partidos.create');
 Route::post('/partidos', [PartidoController::class, 'store'])->name('partidos.store');
 */

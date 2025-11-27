@@ -2,46 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\JugadoraRequest;
+use App\Models\Jugadora;
+use App\Models\Equipo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class JugadoraController extends Controller
 {
-    public function index(Request $request)
+    // Listar todas las jugadoras
+    public function index()
     {
-        $jugadoras = $request->session()->get('jugadoras', [
-            ['nombre' => 'Alexia Putellas', 'equipo' => 'Barça Femenino', 'posicion' => 'Mediocampista'],
-            ['nombre' => 'Esther González', 'equipo' => 'Atlético de Madrid', 'posicion' => 'Delantera'],
-            ['nombre' => 'Misa Rodríguez', 'equipo' => 'Real Madrid Femenino', 'posicion' => 'Portera'],
-        ]);
-
-        $request->session()->put('jugadoras', $jugadoras);
-
+        $jugadoras = Jugadora::with('equipo')->get();
         return view('jugadoras.index', compact('jugadoras'));
     }
 
+    // Mostrar formulario para crear jugadora
     public function create()
     {
-        // Lista de posiciones disponibles para el select
         $posiciones = ['Portera', 'Defensa', 'Mediocampista', 'Delantera'];
-        return view('jugadoras.create', compact('posiciones'));
+        $equipos = Equipo::all(); // Para seleccionar equipo
+        return view('jugadoras.create', compact('posiciones', 'equipos'));
     }
 
-    public function store(Request $request)
+    // Guardar nueva jugadora
+    public function store(JugadoraRequest $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|min:3',
-            'equipo' => 'required|min:2',
-            'posicion' => 'required|in:Portera,Defensa,Mediocampista,Delantera'
-        ], [
-            'required' => 'El campo :attribute es obligatorio.',
-            'min' => 'El campo :attribute debe tener al menos :min caracteres.',
-            'in' => 'La posición seleccionada no es válida.'
-        ]);
+        $validated = $request->validated();
 
-        $jugadoras = $request->session()->get('jugadoras', []);
-        $jugadoras[] = $validated;
-        $request->session()->put('jugadoras', $jugadoras);
+        if ($request->hasFile('foto')) {
+            $path = $request->file('foto')->store('jugadoras', 'public');
+            $validated['foto'] = $path;
+        } else {
+            $validated['foto'] = null;
+        }
+
+        Jugadora::create($validated);
 
         return redirect()->route('jugadoras.index')->with('success', 'Jugadora añadida correctamente.');
+    }
+
+    // Mostrar jugadoras de un equipo específico
+    public function porEquipo(Equipo $equipo)
+    {
+        $jugadoras = $equipo->jugadoras()->get();
+        return view('jugadoras.porEquipo', compact('equipo', 'jugadoras'));
+    }
+
+    public function show(Jugadora $jugadora)
+    {
+        return view('jugadoras.show', compact('jugadora'));
     }
 }

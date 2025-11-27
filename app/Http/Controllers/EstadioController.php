@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class EstadioController extends Controller
 {
-        protected $table = 'estadios'; // nombre real de la tabla en la BD
+    protected $table = 'estadios'; // nombre real de la tabla en la BD
    public function index()
 {
     $estadios = Estadio::all(); 

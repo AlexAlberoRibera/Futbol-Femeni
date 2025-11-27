@@ -1,38 +1,43 @@
-@extends('layouts.app')
-@section('title', 'Añadir Estadio')
-
-@section('content')
-<h1 class="text-3xl font-bold text-blue-800 mb-6">Añadir Nuevo Estadio</h1>
-
-@if ($errors->any())
-<div class="bg-red-100 text-red-700 p-2 mb-4 rounded">
-    <ul class="list-disc pl-5">
-        @foreach ($errors->all() as $error) <li>{{ $error }}</li> @endforeach
-    </ul>
-</div>
-@endif
-
-<form action="{{ route('estadios.store') }}" method="POST" class="space-y-4">
+<form action="{{ route('partidos.store') }}" method="POST" class="space-y-4">
     @csrf
+
+    <!-- Equipo local -->
     <div>
-        <label for="nombre" class="block font-medium mb-1">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" class="w-full border p-2 rounded">
+        <label for="equipo_local_id">Equipo Local:</label>
+        <select name="equipo_local_id" id="equipo_local_id" class="w-full border p-2 rounded" required>
+            <option value="">Selecciona un equipo</option>
+            @foreach($equipos as $equipo)
+                <option value="{{ $equipo->id }}" {{ old('equipo_local_id') == $equipo->id ? 'selected' : '' }}>
+                    {{ $equipo->nombre }}
+                </option>
+            @endforeach
+        </select>
     </div>
+
+    <!-- Equipo visitante -->
     <div>
-        <label for="ciudad" class="block font-medium mb-1">Ciudad:</label>
-        <input type="text" name="ciudad" id="ciudad" value="{{ old('ciudad') }}" class="w-full border p-2 rounded">
+        <label for="equipo_visitante_id">Equipo Visitante:</label>
+        <select name="equipo_visitante_id" id="equipo_visitante_id" class="w-full border p-2 rounded" required>
+            <option value="">Selecciona un equipo</option>
+            @foreach($equipos as $equipo)
+                <option value="{{ $equipo->id }}" {{ old('equipo_visitante_id') == $equipo->id ? 'selected' : '' }}>
+                    {{ $equipo->nombre }}
+                </option>
+            @endforeach
+        </select>
     </div>
+
+    <!-- Fecha -->
     <div>
-        <label for="capacidad" class="block font-medium mb-1">Capacidad:</label>
-        <input type="number" name="capacidad" id="capacidad" value="{{ old('capacidad') }}" class="w-full border p-2 rounded">
+        <label for="fecha">Fecha:</label>
+        <input type="date" name="fecha" id="fecha" value="{{ old('fecha') }}" class="w-full border p-2 rounded" required>
     </div>
+
+    <!-- Resultado -->
     <div>
-        <label for="equipo_principal" class="block font-medium mb-1">Equipo Principal:</label>
-        <input type="text" name="equipo_principal" id="equipo_principal" value="{{ old('equipo_principal') }}" class="w-full border p-2 rounded">
+        <label for="resultado">Resultado:</label>
+        <input type="text" name="resultado" id="resultado" value="{{ old('resultado') }}" placeholder="Ej: 2-1" class="w-full border p-2 rounded">
     </div>
-    <div class="flex space-x-2 mt-4">
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Guardar</button>
-        <a href="{{ route('estadios.index') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Cancelar</a>
-    </div>
+
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Guardar</button>
 </form>
-@endsection

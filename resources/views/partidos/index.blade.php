@@ -27,13 +27,17 @@
         @foreach ($partidos as $partido)
         <tr class="hover:bg-gray-100">
             <td class="border border-gray-300 p-2">
-                <x-equip :nombre="$partido['local']" />
+                <a href="{{ route('equipos.show', $partido->local->id) }}" class="text-blue-700 hover:underline">
+                    {{ $partido->local->nombre }}
+                </a>
             </td>
             <td class="border border-gray-300 p-2">
-                <x-equip :nombre="$partido['visitante']" />
+                <a href="{{ route('equipos.show', $partido->visitante->id) }}" class="text-blue-700 hover:underline">
+                    {{ $partido->visitante->nombre }}
+                </a>
             </td>
-            <td class="border border-gray-300 p-2">{{ $partido['fecha'] }}</td>
-            <td class="border border-gray-300 p-2">{{ $partido['resultado'] ?? '-' }}</td>
+            <td class="border border-gray-300 p-2">{{ $partido->fecha }}</td>
+            <td class="border border-gray-300 p-2">{{ $partido->resultado ?? '-' }}</td>
         </tr>
         @endforeach
     </tbody>

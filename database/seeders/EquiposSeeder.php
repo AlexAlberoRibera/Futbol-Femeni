@@ -16,17 +16,17 @@ class EquiposSeeder extends Seeder
     {
         $estadio = Estadio::where('nombre', 'Campo Nuevo')->first();
         $estadio->equipos()->create([
-            'nombre' => 'Barça Femení',
+            'nombre' => 'Barça Femenino',
             'titulos' => 30,
         ]);
         $estadio = Estadio::where('nombre', 'Wanda Metropolitano')->first();
         $estadio->equipos()->create([
-            'nombre' => 'Atlètic de Madrid',
+            'nombre' => 'Atlético de Madrid',
             'titulos' => 10,
         ]);
         $estadio = Estadio::where('nombre', 'Santiago Bernabéu')->first();
         $estadio->equipos()->create([
-            'nombre' => 'Real Madrid Femení',
+            'nombre' => 'Real Madrid Femenino',
             'titulos' => 5,
         ]);
         Equipo::factory()->count(10)->create();
