@@ -10,7 +10,10 @@
     <p><strong>Títulos:</strong> {{ $equipo->titulos }}</p>
 </div>
 
+<a href="{{ route('partidos.index') }}" class="mt-4 inline-block bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+    Volver a Listado de Partidos
+</a>
 <a href="{{ route('equipos.index') }}" class="mt-4 inline-block bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
-    Volver a equipos
+    Ir a equipos
 </a>
 @endsection

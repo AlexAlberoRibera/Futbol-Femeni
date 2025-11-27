@@ -35,4 +35,13 @@ class JugadoraRequest extends FormRequest
             'goles'         => 'nullable|integer|min:0',
         ];
     }
+    public function messages(): array
+{
+    $minBirth = Carbon::now()->subYears(16)->format('Y');
+
+    return [
+        'fecha_nacimiento.before_or_equal' => "La jugadora debe tener al menos 16 años (nacida antes del $minBirth).",
+    ];
+}
+
 }
