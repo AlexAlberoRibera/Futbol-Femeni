@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.equipo')
 @section('title', 'Nuevo Partido')
 
 @section('content')

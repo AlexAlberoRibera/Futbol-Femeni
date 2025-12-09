@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
+
+
+class JugadoraRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        $minBirth = Carbon::now()->subYears(16)->format('Y-m-d');
+
+        return [
+            'nombre' => 'required|min:3',
+            'equipo_id' => 'required|exists:equipos,id',
+            'posicion' => 'required|in:Portera,Defensa,Mediocampista,Delantera',
+            'fecha_nacimiento' => "required|date|before_or_equal:$minBirth",
+            'foto'         => 'nullable|file|mimes:png|max:2048', // máximo 2MB
+            'dorsal'       => 'required|integer|min:1',
+            'goles'         => 'nullable|integer|min:0',
+        ];
+    }
+    public function messages(): array
+    {
+        $minBirth = Carbon::now()->subYears(16)->format('Y');
+
+        return [
+            'fecha_nacimiento.before_or_equal' => "La jugadora debe tener al menos 16 años (nacida antes del $minBirth).",
+            'nombre.required' => "El nombre es obligatorio",
+            'posicion.required' => "La posicion es obligatoria",
+            'nombre.min' => 'El nombre debe tener al menos 3 caracteres.',
+            'dorsal.min' => "El dorsal minimo permitido es 1",
+            'goles.min' => 'El mínimo de goles permitido es 0.',
+            'foto.max' => 'La foto no puede superar los 2MB.',
+        ];
+    }
+}
