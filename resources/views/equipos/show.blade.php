@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-@extends('layouts.app')
-@section('title', 'Detalle del Equipo')
-=======
 @extends('layouts.equipo')
-@section('title', "Detalle de Equipo")
->>>>>>> f0209ee (Laravel Breeze)
+@section('title', 'Detalle del Equipo')
 
 @section('content')
 <table class="min-w-full bg-white border border-gray-300 rounded shadow">

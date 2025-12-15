@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.equipo')
 @section('title', 'Añadir Estadio')
 
 @section('content')
