@@ -2,6 +2,7 @@
 @section('title', 'Listado de Partidos')
 
 @section('content')
+<h1 class="text-3xl font-bold text-blue-800 mb-6">Listado de Partidos</h1>
 
 @if (session('success'))
 <div class="bg-green-100 text-green-700 p-3 mb-4 rounded">
@@ -26,13 +27,17 @@
         @foreach ($partidos as $partido)
         <tr class="hover:bg-gray-100">
             <td class="border border-gray-300 p-2">
-                <x-equip :nombre="$partido['local']" />
+                <a href="{{ route('equipos.show', $partido->local->id) }}" class="text-blue-700 hover:underline">
+                    {{ $partido->local->nombre }}
+                </a>
             </td>
             <td class="border border-gray-300 p-2">
-                <x-equip :nombre="$partido['visitante']" />
+                <a href="{{ route('equipos.show', $partido->visitante->id) }}" class="text-blue-700 hover:underline">
+                    {{ $partido->visitante->nombre }}
+                </a>
             </td>
-            <td class="border border-gray-300 p-2">{{ $partido['fecha'] }}</td>
-            <td class="border border-gray-300 p-2">{{ $partido['resultado'] ?? '-' }}</td>
+            <td class="border border-gray-300 p-2">{{ $partido->fecha }}</td>
+            <td class="border border-gray-300 p-2">{{ $partido->resultado ?? '-' }}</td>
         </tr>
         @endforeach
     </tbody>

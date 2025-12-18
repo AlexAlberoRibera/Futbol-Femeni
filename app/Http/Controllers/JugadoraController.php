@@ -3,45 +3,48 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Jugadora;
+use App\Models\Equipo;
 
 class JugadoraController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $jugadoras = $request->session()->get('jugadoras', [
-            ['nombre' => 'Alexia Putellas', 'equipo' => 'Barça Femenino', 'posicion' => 'Mediocampista'],
-            ['nombre' => 'Esther González', 'equipo' => 'Atlético de Madrid', 'posicion' => 'Delantera'],
-            ['nombre' => 'Misa Rodríguez', 'equipo' => 'Real Madrid Femenino', 'posicion' => 'Portera'],
-        ]);
-
-        $request->session()->put('jugadoras', $jugadoras);
-
+        $jugadoras = Jugadora::with('equipo')->get();
         return view('jugadoras.index', compact('jugadoras'));
     }
 
     public function create()
     {
-        // Lista de posiciones disponibles para el select
+        $equipos = Equipo::all();
         $posiciones = ['Portera', 'Defensa', 'Mediocampista', 'Delantera'];
-        return view('jugadoras.create', compact('posiciones'));
+        return view('jugadoras.create', compact('equipos', 'posiciones'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nombre' => 'required|min:3',
-            'equipo' => 'required|min:2',
-            'posicion' => 'required|in:Portera,Defensa,Mediocampista,Delantera'
+            'equipo_id' => 'required|exists:equipos,id',
+            'posicion' => 'required|in:Portera,Defensa,Mediocampista,Delantera',
+            'foto' => 'nullable|mimes:png|max:2048',
         ], [
-            'required' => 'El campo :attribute es obligatorio.',
-            'min' => 'El campo :attribute debe tener al menos :min caracteres.',
-            'in' => 'La posición seleccionada no es válida.'
+            'foto.mimes' => 'Solo se permiten imágenes PNG.',
+            'foto.max' => 'La imagen no puede superar los 2 MB.',
         ]);
 
-        $jugadoras = $request->session()->get('jugadoras', []);
-        $jugadoras[] = $validated;
-        $request->session()->put('jugadoras', $jugadoras);
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $validated['foto'] = base64_encode(file_get_contents($file->getRealPath()));
+        }
+
+        Jugadora::create($validated);
 
         return redirect()->route('jugadoras.index')->with('success', 'Jugadora añadida correctamente.');
+    }
+
+    public function show(Jugadora $jugadora)
+    {
+        return view('jugadoras.show', compact('jugadora'));
     }
 }

@@ -11,16 +11,14 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
-    {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-        $this->call([
-            EstadiosSeeder::class,
-            EquiposSeeder::class,
-            JugadorasSeeder::class
-        ]);
-    }
+   public function run()
+{
+    $this->call([
+        EstadiosSeeder::class,
+        EquiposSeeder::class,
+        PartidosSeeder::class,
+        JugadorasSeeder::class,
+    ]);
+}
+
 }

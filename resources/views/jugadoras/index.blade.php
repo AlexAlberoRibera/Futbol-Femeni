@@ -24,11 +24,18 @@
     </thead>
     <tbody>
         @foreach ($jugadoras as $jugadora)
-            <x-jugadora 
-                :nombre="$jugadora['nombre']"
-                :equipo="$jugadora['equipo']"
-                :posicion="$jugadora['posicion']"
-            />
+        <tr class="hover:bg-gray-100">
+            <!-- Nombre con enlace a show de la jugadora -->
+            <td class="border border-gray-300 p-2">
+                <a href="{{ route('jugadoras.show', $jugadora->id) }}" class="text-blue-700 hover:underline">
+                    {{ $jugadora->nombre }}
+                </a>
+            </td>
+
+            <!-- Equipo con enlace a show del equipo -->
+             <td class="border border-gray-300 p-2">{{ $jugadora->equipo->nombre }}</td>
+                <td class="border border-gray-300 p-2">{{ $jugadora->posicion }}</td>
+        </tr>
         @endforeach
     </tbody>
 </table>

@@ -19,22 +19,36 @@
 
     <div>
         <label class="block font-medium mb-1">Equipo Local:</label>
-        <input type="text" name="local" value="{{ old('local') }}" class="w-full border border-gray-300 rounded p-2" required>
+        <select name="local_id" class="w-full border p-2 rounded" required>
+            <option value="">Selecciona un equipo</option>
+            @foreach($equipos as $equipo)
+                <option value="{{ $equipo->id }}" {{ old('local_id') == $equipo->id ? 'selected' : '' }}>
+                    {{ $equipo->nombre }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <div>
         <label class="block font-medium mb-1">Equipo Visitante:</label>
-        <input type="text" name="visitante" value="{{ old('visitante') }}" class="w-full border border-gray-300 rounded p-2" required>
+        <select name="visitante_id" class="w-full border p-2 rounded" required>
+            <option value="">Selecciona un equipo</option>
+            @foreach($equipos as $equipo)
+                <option value="{{ $equipo->id }}" {{ old('visitante_id') == $equipo->id ? 'selected' : '' }}>
+                    {{ $equipo->nombre }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <div>
         <label class="block font-medium mb-1">Fecha:</label>
-        <input type="date" name="fecha" value="{{ old('fecha') }}" class="w-full border border-gray-300 rounded p-2" required>
+        <input type="date" name="fecha" value="{{ old('fecha') }}" class="w-full border p-2 rounded" required>
     </div>
 
     <div>
         <label class="block font-medium mb-1">Resultado (opcional):</label>
-        <input type="text" name="resultado" value="{{ old('resultado') }}" class="w-full border border-gray-300 rounded p-2" placeholder="Ej: 2-1">
+        <input type="text" name="resultado" value="{{ old('resultado') }}" class="w-full border p-2 rounded" placeholder="Ej: 2-1">
     </div>
 
     <div class="flex space-x-2 mt-4">

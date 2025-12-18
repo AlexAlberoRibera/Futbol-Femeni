@@ -1,5 +1,5 @@
 @extends('layouts.equipo')
-@section('title', "Guia de Equipos")
+@section('title', "Guía de Equipos")
 
 @section('content')
 @if (session('success'))
@@ -7,7 +7,7 @@
 @endif
 
 <p class="mb-4">
-  <a href="{{ route('equipos.create') }}" class="bg-blue-600 text-white px-3 py-2 rounded">Nou equip</a>
+  <a href="{{ route('equipos.create') }}" class="bg-blue-600 text-white px-3 py-2 rounded">Nuevo equipo</a>
 </p>
 
 <table class="w-full border-collapse border border-gray-300">
@@ -19,13 +19,11 @@
   </tr>
   </thead>
   <tbody>
-  @foreach($equipos as $key => $equipo)
+  @foreach($equipos as $equipo)
     <tr class="hover:bg-gray-100">
-      <td class="border border-gray-300 p-2">
-        <a href="{{ route('equipos.show', $key) }}" class="text-blue-700 hover:underline">{{ $equipo['nombre'] }}</a>
-      </td>
-      <td class="border border-gray-300 p-2">{{ $equipo['estadio'] }}</td>
-      <td class="border border-gray-300 p-2">{{ $equipo['titulos'] }}</td>
+      <td class="border border-gray-300 p-2">{{ $equipo->nombre }}</td>
+      <td class="border border-gray-300 p-2">{{ $equipo->estadio->nombre }}</td>
+      <td class="border border-gray-300 p-2">{{ $equipo->titulos }}</td>
     </tr>
   @endforeach
   </tbody>

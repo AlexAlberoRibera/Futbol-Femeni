@@ -3,52 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use App\Models\Equipo;
+use App\Models\Estadio;
 
 class EquipoController extends Controller
 {
-    public $equipos = [
-        ['nombre' => 'Barça Femenino',      'estadio' => 'Camp Nou',               'titulos' => 30],
-        ['nombre' => 'Atletico de Madrid',  'estadio' => 'Cívitas Metropolitano',  'titulos' => 10],
-        ['nombre' => 'Real Madrid Femenino', 'estadio' => 'Alfredo Di Stéfano',    'titulos' => 5],
-    ];
-
+    /**
+     * Mostrar todos los equipos
+     */
     public function index()
     {
-        $equipos = Session::get('equipos', $this->equipos);
+        $equipos = Equipo::with('estadio')->get();
         return view('equipos.index', compact('equipos'));
     }
 
-   public function show(int $id)
-{
-    $equipos = Session::get('equipos', $this->equipos);
-    abort_if(!isset($equipos[$id]), 404);
-    $equipo = $equipos[$id]; // <-- guardamos en $equipo
-    return view('equipos.show', compact('equipo'));
-}
-
-
-    public function create()
+    /**
+     * Mostrar un equipo
+     */
+    public function show(int $id)
     {
-        return view('equipos.create');
+        $equipo = Equipo::with(['estadio', 'partidosComoLocal', 'partidosComoVisitante'])->findOrFail($id);
+        return view('equipos.show', compact('equipo'));
     }
 
+    /**
+     * Formulario para crear un nuevo equipo
+     */
+    public function create()
+    {
+        $estadios = Estadio::all(); // Para un select de estadios
+        return view('equipos.create', compact('estadios'));
+    }
+
+    /**
+     * Guardar un nuevo equipo
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nombre' => 'required|min:3',
-            'estadio' => 'required',
+            'estadio_id' => 'required|exists:estadios,id',
             'titulos' => 'required|integer|min:0',
         ]);
 
-        // Recuperar los equipos de sesión
-        $equipos = Session::get('equipos', $this->equipos);
-
-        // Añadir el nuevo equipo
-        $equipos[] = $validated;
-
-        // Guardar de nuevo en la misma clave 'equipos'
-        Session::put('equipos', $equipos);
+        Equipo::create($validated);
 
         return redirect()->route('equipos.index')->with('success', 'Equipo añadido correctamente!');
     }

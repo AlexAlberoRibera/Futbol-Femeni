@@ -1,33 +1,29 @@
 @extends('layouts.equipo')
-@section('title', "Detalle de Jugadora")
+@section('title', $jugadora->nombre)
 
 @section('content')
-<h1 class="text-3xl font-bold text-blue-800 mb-6">Detalle de Jugadora</h1>
+<h1 class="text-3xl font-bold text-blue-800 mb-4">{{ $jugadora->nombre }}</h1>
 
-<div class="bg-white p-6 rounded shadow max-w-md">
-    <div class="mb-4">
-        <span class="font-semibold text-gray-700">Nombre:</span>
-        <span class="text-gray-900">{{ $jugadora->nombre }}</span>
-    </div>
+@if($jugadora->foto)
+    <img src="data:image/png;base64,{{ $jugadora->foto }}" alt="{{ $jugadora->nombre }}" class="w-32 h-32 object-cover rounded-full mb-4">
+@else
+    <p class="text-gray-500 mb-4">Foto no disponible</p>
+@endif
 
-    <div class="mb-4">
-        <span class="font-semibold text-gray-700">Fecha de Nacimiento:</span>
-        <span class="text-gray-900">{{ \Carbon\Carbon::parse($jugadora->fecha_nacimiento)->format('d/m/Y') }}</span>
-    </div>
+<p><strong>Equipo:</strong> 
+    <a href="{{ route('equipos.show', $jugadora->equipo->id) }}" class="text-blue-700 hover:underline">
+        {{ $jugadora->equipo->nombre }}
+    </a>
+</p>
 
-    <div class="mb-4">
-        <span class="font-semibold text-gray-700">Foto:</span>
-        <div class="mt-2">
-            @if($jugadora->foto)
-                <img src="{{ asset('storage/' . $jugadora->foto) }}" alt="Foto de {{ $jugadora->nombre }}" class="w-48 h-48 object-cover rounded">
-            @else
-                <span class="text-gray-500">No hay foto disponible</span>
-            @endif
-        </div>
-    </div>
+<p><strong>Posición:</strong> {{ $jugadora->posicion }}</p>
 
-    <a href="{{ route('jugadoras.index') }}" class="inline-block mt-4 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
-        Volver al listado
+<div class="flex space-x-2 mt-4">
+    <a href="{{ route('jugadoras.index') }}" class="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700">
+        Listado de Jugadoras
+    </a>
+    <a href="{{ route('equipos.show', $jugadora->equipo->id) }}" class="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700">
+        Ver los datos del Equipo
     </a>
 </div>
 @endsection

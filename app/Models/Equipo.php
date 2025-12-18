@@ -18,4 +18,20 @@ class Equipo extends Model
     {
         return $this->belongsTo(Estadio::class);
     }
+
+    /**
+     * Relación: los partidos donde este equipo es local
+     */
+    public function partidosComoLocal()
+    {
+        return $this->hasMany(Partido::class, 'local_id');
+    }
+
+    /**
+     * Relación: los partidos donde este equipo es visitante
+     */
+    public function partidosComoVisitante()
+    {
+        return $this->hasMany(Partido::class, 'visitante_id');
+    }
 }
