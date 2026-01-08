@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Estadio;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +23,7 @@ class EquipoFactory extends Factory
             'nombre' => $this->faker->unique()->company,
             'titulos' => $this->faker->numberBetween(0, 50),
             'estadio_id' =>  Estadio::factory(),
-            //'escut' => 'escuts/dummy.png',
+            'user_id' => User::factory(['role' => 'manager']),
         ];
     }
 }

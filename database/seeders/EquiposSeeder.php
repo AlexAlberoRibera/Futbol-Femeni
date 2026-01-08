@@ -4,37 +4,38 @@ namespace Database\Seeders;
 
 use App\Models\Equipo;
 use App\Models\Estadio;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class EquiposSeeder extends Seeder
 {
     public function run(): void
     {
-        $estadio = Estadio::where('nombre', 'Campo Nuevo')->first();
-        if ($estadio) {
-            $estadio->equipos()->create([
-                'nombre' => 'Barça Femení',
-                'titulos' => 30,
-            ]);
-        }
+        $admin = User::where('email', 'admin@example.com')->firstOrFail();
 
-        $estadio = Estadio::where('nombre', 'Wanda Metropolitano')->first();
-        if ($estadio) {
-            $estadio->equipos()->create([
-                'nombre' => 'Atlètic de Madrid',
-                'titulos' => 10,
-            ]);
-        }
+        $campoNuevo = Estadio::where('nombre', 'Campo Nuevo')->firstOrFail();
+        $wanda = Estadio::where('nombre', 'Wanda Metropolitano')->firstOrFail();
+        $bernabeu = Estadio::where('nombre', 'Santiago Bernabéu')->firstOrFail();
 
-        $estadio = Estadio::where('nombre', 'Santiago Bernabéu')->first();
-        if ($estadio) {
-            $estadio->equipos()->create([
-                'nombre' => 'Real Madrid Femení',
-                'titulos' => 5,
-            ]);
-        }
+        Equipo::create([
+            'nombre' => 'Barça Femení',
+            'titulos' => 30,
+            'estadio_id' => $campoNuevo->id,
+            'user_id' => $admin->id,
+        ]);
 
-        // Opcional: crear 10 equipos aleatorios para pruebas
-        Equipo::factory()->count(10)->create();
+        Equipo::create([
+            'nombre' => 'Atlètic de Madrid',
+            'titulos' => 10,
+            'estadio_id' => $wanda->id,
+            'user_id' => $admin->id,
+        ]);
+
+        Equipo::create([
+            'nombre' => 'Real Madrid Femení',
+            'titulos' => 5,
+            'estadio_id' => $bernabeu->id,
+            'user_id' => $admin->id,
+        ]);
     }
 }

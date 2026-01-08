@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre')->unique();
             $table->foreignId('estadio_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->integer('titulos')->default(0);
             $table->timestamps();
         });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Equipo;
 use App\Models\Estadio;
+use Illuminate\Support\Facades\Auth;
 
 class EquipoController extends Controller
 {
@@ -22,7 +23,9 @@ class EquipoController extends Controller
      */
     public function show(int $id)
     {
-        $equipo = Equipo::with(['estadio', 'partidosComoLocal', 'partidosComoVisitante'])->findOrFail($id);
+        $equipo = Equipo::with(['estadio', 'partidosComoLocal', 'partidosComoVisitante'])
+            ->findOrFail($id);
+
         return view('equipos.show', compact('equipo'));
     }
 
@@ -31,7 +34,7 @@ class EquipoController extends Controller
      */
     public function create()
     {
-        $estadios = Estadio::all(); // Para un select de estadios
+        $estadios = Estadio::all();
         return view('equipos.create', compact('estadios'));
     }
 
@@ -46,8 +49,15 @@ class EquipoController extends Controller
             'titulos' => 'required|integer|min:0',
         ]);
 
-        Equipo::create($validated);
+        Equipo::create([
+            'nombre' => $validated['nombre'],
+            'estadio_id' => $validated['estadio_id'],
+            'titulos' => $validated['titulos'],
+            'user_id' => Auth::id(),
+        ]);
 
-        return redirect()->route('equipos.index')->with('success', 'Equipo añadido correctamente!');
+        return redirect()
+            ->route('equipos.index')
+            ->with('success', 'Equipo añadido correctamente!');
     }
 }
