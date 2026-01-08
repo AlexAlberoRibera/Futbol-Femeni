@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Equipo;
 
 class Partido extends Model
 {
@@ -14,19 +15,16 @@ class Partido extends Model
         'visitante_id',
         'fecha',
         'resultado',
+        'arbitre_id', // si quieres controlar quién modifica
     ];
 
-    /**
-     * Equipo local
-     */
+    // Equipo local
     public function local()
     {
         return $this->belongsTo(Equipo::class, 'local_id');
     }
 
-    /**
-     * Equipo visitante
-     */
+    // Equipo visitante
     public function visitante()
     {
         return $this->belongsTo(Equipo::class, 'visitante_id');

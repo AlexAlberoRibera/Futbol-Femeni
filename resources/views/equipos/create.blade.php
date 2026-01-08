@@ -4,6 +4,7 @@
 @section('content')
 <h1 class="text-3xl font-bold text-blue-800 mb-6">Añadir Nuevo Equipo</h1>
 
+{{-- Mensajes de error --}}
 @if($errors->any())
 <div class="bg-red-100 text-red-700 p-2 mb-4 rounded">
     <ul class="list-disc pl-5">
@@ -14,7 +15,7 @@
 </div>
 @endif
 
-<form action="{{ route('equipos.store') }}" method="POST" class="space-y-4">
+<form action="{{ route('equipos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
     @csrf
 
     <div>
@@ -39,9 +40,27 @@
         <input type="number" name="titulos" value="{{ old('titulos') }}" class="w-full border p-2 rounded" min="0" required>
     </div>
 
+    <div>
+        <label class="block font-medium mb-1">Escudo (PNG/JPG, máximo 2 MB):</label>
+        <input type="file" name="escut" accept="image/png, image/jpeg" class="w-full border p-2 rounded" id="escut">
+        <img id="preview" src="#" class="mt-2 w-24 h-24 object-contain hidden" alt="Vista previa del escudo">
+    </div>
+
     <div class="flex space-x-2 mt-4">
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Guardar</button>
         <a href="{{ route('equipos.index') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Cancelar</a>
     </div>
 </form>
+
+{{-- Script para previsualizar la imagen --}}
+<script>
+document.getElementById('escut').addEventListener('change', function(event){
+    const [file] = event.target.files;
+    if(file){
+        const preview = document.getElementById('preview');
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('hidden');
+    }
+});
+</script>
 @endsection

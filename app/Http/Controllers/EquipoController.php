@@ -47,17 +47,22 @@ class EquipoController extends Controller
             'nombre' => 'required|min:3',
             'estadio_id' => 'required|exists:estadios,id',
             'titulos' => 'required|integer|min:0',
+            'escut' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ]);
+
+        $path = null;
+        if ($request->hasFile('escut')) {
+            $path = $request->file('escut')->store('equipos', 'public');
+        }
 
         Equipo::create([
             'nombre' => $validated['nombre'],
             'estadio_id' => $validated['estadio_id'],
             'titulos' => $validated['titulos'],
             'user_id' => Auth::id(),
+            'escut' => $path,
         ]);
 
-        return redirect()
-            ->route('equipos.index')
-            ->with('success', 'Equipo añadido correctamente!');
+        return redirect()->route('equipos.index')->with('success', 'Equipo añadido correctamente!');
     }
 }

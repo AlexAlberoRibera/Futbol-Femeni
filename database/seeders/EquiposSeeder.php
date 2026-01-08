@@ -11,7 +11,7 @@ class EquiposSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::where('email', 'admin@example.com')->firstOrFail();
+        $admin = User::where('role', User::ROLE_ADMIN)->firstOrFail();
 
         $campoNuevo = Estadio::where('nombre', 'Campo Nuevo')->firstOrFail();
         $wanda = Estadio::where('nombre', 'Wanda Metropolitano')->firstOrFail();

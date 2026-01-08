@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Partido;
-use App\Models\Equipo;
 
 class PartidoController extends Controller
 {
@@ -14,24 +13,20 @@ class PartidoController extends Controller
         return view('partidos.index', compact('partidos'));
     }
 
-    public function create()
+    public function updateResult(Request $request, Partido $partido)
     {
-        $equipos = Equipo::all();
-        return view('partidos.create', compact('equipos'));
-    }
+        // Ara authorize() funciona perfectament
+        $this->authorize('updateResult', $partido);
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'local_id' => 'required|different:visitante_id|exists:equipos,id',
-            'visitante_id' => 'required|exists:equipos,id',
-            'fecha' => 'required|date',
-            'resultado' => ['nullable', 'regex:/^\d+-\d+$/'],
+        $request->validate([
+            'resultado' => 'required|string|max:10',
         ]);
 
-        Partido::create($validated);
+        $partido->update([
+            'resultado' => $request->resultado,
+        ]);
 
         return redirect()->route('partidos.index')
-                         ->with('success', 'Partido añadido correctamente.');
+            ->with('success', 'Resultado actualizado correctamente');
     }
 }
