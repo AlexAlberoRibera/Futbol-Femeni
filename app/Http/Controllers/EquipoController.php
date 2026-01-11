@@ -38,22 +38,31 @@ class EquipoController extends Controller
 
     public function edit(Equipo $equipo)
     {
+        $this->authorize('update', $equipo);
+
         $estadios = Estadio::all();
         return view('equipos.edit', compact('equipo', 'estadios'));
     }
 
     public function update(UpdateEquipoRequest $request, Equipo $equipo)
     {
+        $this->authorize('update', $equipo);
+
         $this->service->update($equipo, $request->validated());
 
-        return redirect()->route('equipos.index')
-            ->with('success', 'Equipo actualizado correctamente.');
+        return redirect()
+            ->route('equipos.index')
+            ->with('success', 'Equipo actualizado correctamente');
     }
+
     public function destroy(Equipo $equipo)
     {
+        $this->authorize('delete', $equipo);
+
         $this->service->delete($equipo);
 
-        return redirect()->route('equipos.index')
-            ->with('success', 'Equipo eliminado correctamente.');
+        return redirect()
+            ->route('equipos.index')
+            ->with('success', 'Equipo eliminado correctamente');
     }
 }

@@ -10,9 +10,7 @@
 </div>
 @endif
 
-<a href="{{ route('partidos.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4 inline-block">
-    Añadir nuevo partido
-</a>
+
 
 <table class="min-w-full bg-white border border-gray-300 rounded shadow">
     <thead class="bg-blue-100">

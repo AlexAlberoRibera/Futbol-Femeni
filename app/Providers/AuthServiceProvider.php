@@ -27,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Jugadora::class => JugadoraPolicy::class,
         Partido::class => PartidoPolicy::class,
+        Equipo::class => EquipoPolicy::class,
     ];
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Jugadora;
 use App\Models\Equipo;
+use App\Http\Requests\UpdateJugadoraRequest;
 
 class JugadoraController extends Controller
 {
@@ -50,4 +51,20 @@ public function store(Request $request)
     {
         return view('jugadoras.show', compact('jugadora'));
     }
+    public function edit(Jugadora $jugadora)
+{
+    $this->authorize('update', $jugadora);
+
+    return view('jugadoras.edit', compact('jugadora'));
+}
+
+public function update(UpdateJugadoraRequest $request, Jugadora $jugadora)
+{
+    $this->authorize('update', $jugadora);
+
+    $jugadora->update($request->validated());
+
+    return redirect()->route('jugadoras.index')->with('success', 'Jugadora actualizada');
+}
+
 }

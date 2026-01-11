@@ -4,24 +4,49 @@ namespace App\Policies;
 
 use App\Models\Equipo;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class equipoPolicy
+class EquipoPolicy
 {
-    public function update(User $user, equipo $equipo)
+    use HandlesAuthorization;
+
+    /**
+     * Determina si el usuario puede ver cualquier equipo.
+     */
+    public function viewAny(User $user)
     {
-        if ($user->role === 'admin') {
-            return true;
-        }
-
-        if ($user->role === 'manager') {
-            return $user->team_id === $equipo->id;
-        }
-
-        return false;
+        return true; // Todos pueden ver la lista
     }
 
-    public function delete(User $user, equipo $equipo)
+    /**
+     * Determina si el usuario puede ver un equipo específico.
+     */
+    public function view(User $user, Equipo $equipo)
     {
-        return $this->update($user, $equipo);
+        return true;
+    }
+
+    /**
+     * Determina si el usuario puede crear equipos.
+     */
+    public function create(User $user)
+    {
+        return $user->role === 'admin';
+    }
+
+    /**
+     * Determina si el usuario puede actualizar el equipo.
+     */
+    public function update(User $user, Equipo $equipo)
+    {
+        return $user->role === 'admin' || ($user->role === 'manager' && $user->team_id === $equipo->id);
+    }
+
+    /**
+     * Determina si el usuario puede eliminar el equipo.
+     */
+    public function delete(User $user, Equipo $equipo)
+    {
+        return $user->role === 'admin';
     }
 }

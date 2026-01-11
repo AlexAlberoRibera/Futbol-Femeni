@@ -4,19 +4,25 @@ namespace App\Policies;
 
 use App\Models\Partido;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PartidoPolicy
 {
-    public function before(User $user)
+    use HandlesAuthorization;
+
+    public function viewAny(User $user)
     {
-        if ($user->isAdmin()) {
-            return true; // Admin pot fer TOT
-        }
+        return true;
     }
 
-    // nombreés l'àrbitre assignat pot modificar el resultat
-    public function updateResult(User $user, Partido $partido)
+    public function view(User $user, Partido $partido)
     {
-        return $user->isArbitre() && $partido->arbitro_id === $user->id;
+        return true;
+    }
+
+    public function update(User $user, Partido $partido)
+    {
+        // Solo admin o el árbitro asignado puede actualizar resultado
+        return $user->role === 'admin' || ($user->role === 'arbitre' && $user->id === $partido->arbitre_id);
     }
 }

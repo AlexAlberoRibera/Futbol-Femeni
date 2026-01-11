@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Partido;
+use App\Http\Requests\PartitRequest;
 
 class PartidoController extends Controller
 {
@@ -13,20 +14,10 @@ class PartidoController extends Controller
         return view('partidos.index', compact('partidos'));
     }
 
-    public function updateResult(Request $request, Partido $partido)
-    {
-        // Ara authorize() funciona perfectament
-        $this->authorize('updateResult', $partido);
+    public function updateResult(PartitRequest $request, Partido $partido)
+{
+    $partido->update(['resultado' => $request->resultado]);
 
-        $request->validate([
-            'resultado' => 'required|string|max:10',
-        ]);
-
-        $partido->update([
-            'resultado' => $request->resultado,
-        ]);
-
-        return redirect()->route('partidos.index')
-            ->with('success', 'Resultado actualizado correctamente');
-    }
+    return redirect()->route('partidos.index')->with('success', 'Resultado actualizado');
+}
 }

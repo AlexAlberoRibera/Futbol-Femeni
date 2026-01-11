@@ -45,15 +45,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('jugadoras', JugadoraController::class);
 
     // Partidos
-    Route::get('partidos', [PartidoController::class, 'index'])->name('partidos.index');
-    Route::put('partidos/{partido}/update-result', [PartidoController::class, 'updateResult'])
-        ->name('partidos.updateResult');
+    Route::middleware('auth')->group(function () {
+        Route::resource('partidos', PartidoController::class);
+    });
 
     // Estadios
     Route::resource('estadios', EstadioController::class);
 
-  Route::get('/clasificacion', [ClasificacionController::class, 'index'])
-    ->middleware('auth')
-    ->name('clasificacion.index');
-
+    Route::get('/clasificacion', [ClasificacionController::class, 'index'])
+        ->middleware('auth')
+        ->name('clasificacion.index');
 });

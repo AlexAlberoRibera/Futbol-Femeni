@@ -4,32 +4,36 @@ namespace App\Policies;
 
 use App\Models\Jugadora;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class JugadoraPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function before(User $user)
+    use HandlesAuthorization;
+
+    public function viewAny(User $user)
     {
-        if ($user->isAdmin()) {
-            return true; // Admin puede todo
-        }
+        return true;
+    }
+
+    public function view(User $user, Jugadora $jugadora)
+    {
+        return true;
     }
 
     public function create(User $user)
     {
-        return $user->isManager();
+        return $user->role === 'admin' || $user->role === 'manager';
     }
 
     public function update(User $user, Jugadora $jugadora)
     {
-        return $user->isManager() && $user->equipo_id === $jugadora->equipo_id;
+        return $user->role === 'admin'
+            || ($user->role === 'manager' && $user->team_id === $jugadora->equipo_id);
     }
 
     public function delete(User $user, Jugadora $jugadora)
     {
-        return $user->isManager() && $user->equipo_id === $jugadora->equipo_id;
+        return $user->role === 'admin'
+            || ($user->role === 'manager' && $user->team_id === $jugadora->equipo_id);
     }
 }
