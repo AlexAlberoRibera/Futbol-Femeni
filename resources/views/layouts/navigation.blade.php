@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('equipos.index')" :active="request()->routeIs('equipos.*')">
-                        {{ __('Guia de Equipos') }}
+                        {{ __('Guia de equipos') }}
                     </x-nav-link>
                     <x-nav-link :href="route('estadios.index')" :active="request()->routeIs('estadios.*')">
                         {{ __('Listado de Estadios') }}
@@ -27,6 +27,11 @@
                     <x-nav-link :href="route('partidos.index')" :active="request()->routeIs('partidos.*')">
                         {{ __('Listado de Partidos') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('clasificacion.index')"
+                        :active="request()->routeIs('clasificacion.index')">
+                        {{ __('Clasificación') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -55,7 +60,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -101,7 +106,7 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
+                        onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>

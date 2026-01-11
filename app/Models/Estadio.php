@@ -18,6 +18,6 @@ class Estadio extends Model
     // Relación: un estadio tiene muchos equipos
     public function equipos()
     {
-        return $this->hasMany(Equipo::class);
+        return $this->hasMany(equipo::class);
     }
 }

@@ -20,6 +20,6 @@ class Jugadora extends Model
     // Relación con equipo
     public function equipo()
     {
-        return $this->belongsTo(Equipo::class);
+        return $this->belongsTo(equipo::class);
     }
 }

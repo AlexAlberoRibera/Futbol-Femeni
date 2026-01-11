@@ -11,9 +11,9 @@ class PartidosSeeder extends Seeder
     public function run(): void
     {
         // Obtener equipos por nombre
-        $barca = Equipo::where('nombre', 'Barça Femení')->first();
-        $atleti = Equipo::where('nombre', 'Atlètic de Madrid')->first();
-        $real = Equipo::where('nombre', 'Real Madrid Femení')->first();
+        $barca = equipo::where('nombre', 'Barça Femení')->first();
+        $atleti = equipo::where('nombre', 'Atlètic de Madrid')->first();
+        $real = equipo::where('nombre', 'Real Madrid Femení')->first();
 
         // Crear partidos manuales
         if ($barca && $atleti) {

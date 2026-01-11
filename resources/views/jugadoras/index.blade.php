@@ -17,22 +17,22 @@
 <table class="min-w-full bg-white border border-gray-300 rounded shadow">
     <thead class="bg-blue-100">
         <tr>
-            <th class="py-2 px-4 text-left">Nombre</th>
-            <th class="py-2 px-4 text-left">Equipo</th>
+            <th class="py-2 px-4 text-left">nombre</th>
+            <th class="py-2 px-4 text-left">equipo</th>
             <th class="py-2 px-4 text-left">Posición</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($jugadoras as $jugadora)
         <tr class="hover:bg-gray-100">
-            <!-- Nombre con enlace a show de la jugadora -->
+            <!-- nombre con enlace a show de la jugadora -->
             <td class="border border-gray-300 p-2">
                 <a href="{{ route('jugadoras.show', $jugadora->id) }}" class="text-blue-700 hover:underline">
                     {{ $jugadora->nombre }}
                 </a>
             </td>
 
-            <!-- Equipo con enlace a show del equipo -->
+            <!-- equipo con enlace a show del equipo -->
              <td class="border border-gray-300 p-2">{{ $jugadora->equipo->nombre }}</td>
                 <td class="border border-gray-300 p-2">{{ $jugadora->posicion }}</td>
         </tr>

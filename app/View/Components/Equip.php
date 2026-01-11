@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Equip extends Component
+class equipo extends Component
 {
     public $nombre; // Variable que recibirá el nombre del equipo
 
@@ -21,6 +21,6 @@ class Equip extends Component
      */
     public function render()
     {
-        return view('componentes.equip');
+        return view('componentes.equipo');
     }
 }

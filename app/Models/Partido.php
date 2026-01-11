@@ -18,15 +18,15 @@ class Partido extends Model
         'arbitre_id', // si quieres controlar quién modifica
     ];
 
-    // Equipo local
+    // equipo local
     public function local()
     {
-        return $this->belongsTo(Equipo::class, 'local_id');
+        return $this->belongsTo(equipo::class, 'local_id');
     }
 
-    // Equipo visitante
+    // equipo visitante
     public function visitante()
     {
-        return $this->belongsTo(Equipo::class, 'visitante_id');
+        return $this->belongsTo(equipo::class, 'visitante_id');
     }
 }

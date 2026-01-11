@@ -1,58 +1,55 @@
-@extends('layouts.equip')
-@section('title', __("Modificació d'Equip"))
+@extends('layouts.equipo')
+@section('title', "Modificación de Equipo")
 
 @section('content')
-    @if ($errors->any())
-        <div class="bg-red-100 text-red-700 p-2 mb-4">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+@if ($errors->any())
+    <div class="bg-red-100 text-red-700 p-2 mb-4 rounded">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-    <form action="{{ route('equips.update', $equip->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-        @csrf
-        @method('PUT')
+<form action="{{ route('equipos.update', $equipo->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+    @csrf
+    @method('PUT')
 
-        <div>
-            <label for="nom" class="block font-bold">{{ __('Nom')}}:</label>
-            <input type="text" name="nom" id="nom"
-                   value="{{ old('nom', $equip->nom) }}"
-                   class="border p-2 w-full">
-        </div>
+    <div>
+        <label for="nombre" class="block font-bold">Nombre:</label>
+        <input type="text" name="nombre" id="nombre"
+               value="{{ old('nombre', $equipo->nombre) }}"
+               class="border p-2 w-full" required>
+    </div>
 
-        <div>
-            <label for="estadi_id" class="block font-bold">{{ __('Estadi')}}:</label>
-            <select name="estadi_id" id="estadi_id" class="border p-2 w-full">
-                @foreach ($estadis as $estadi)
-                    <option value="{{ $estadi->id }}"
-                        {{ old('estadi_id', $equip->estadi_id) == $estadi->id ? 'selected' : '' }}>
-                        {{ $estadi->nom }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+    <div>
+        <label for="estadio_id" class="block font-bold">Estadio:</label>
+        <select name="estadio_id" id="estadio_id" class="border p-2 w-full" required>
+            @foreach ($estadios as $estadio)
+                <option value="{{ $estadio->id }}" 
+                    {{ old('estadio_id', $equipo->estadio_id) == $estadio->id ? 'selected' : '' }}>
+                    {{ $estadio->nombre }}
+                </option>
+            @endforeach
+        </select>
+    </div>
 
-        <div class="mb-4">
-            <label for="escut" class="block text-sm font-medium text-gray-700 mb-1">{{ __('Escut')}}:</label>
-            @if ($equip->escut)
-                <div class="mb-2">
-                    <img src="{{ asset('storage/' . $equip->escut) }}" alt="Escut actual" class="h-16">
-                </div>
-            @endif
-            <input type="file" name="escut" id="escut"
-                   class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
-        </div>
+    <div>
+        <label for="titulos" class="block font-bold">Títulos:</label>
+        <input type="number" name="titulos" id="titulos"
+               value="{{ old('titulos', $equipo->titulos) }}"
+               class="border p-2 w-full" min="0" required>
+    </div>
 
-        <div>
-            <label for="titols" class="block font-bold">{{__('Títols')}}:</label>
-            <input type="number" name="titols" id="titols"
-                   value="{{ old('titols', $equip->titols) }}"
-                   class="border p-2 w-full">
-        </div>
+    <div>
+        <label for="escudo" class="block font-bold">Escudo (PNG/JPG, max 2 MB):</label>
+        @if ($equipo->escudo)
+            <img src="{{ asset('storage/' . $equipo->escudo) }}" alt="Escudo" class="h-16 mb-2">
+        @endif
+        <input type="file" name="escudo" id="escudo" accept="image/png, image/jpeg" class="w-full border p-2 rounded">
+    </div>
 
-        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">{{__('Actualitzar')}}</button>
-    </form>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Actualizar</button>
+</form>
 @endsection

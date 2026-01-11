@@ -14,7 +14,7 @@ use App\Models\Estadio;
 // Policies
 use App\Policies\JugadoraPolicy;
 use App\Policies\PartidoPolicy;
-use App\Policies\EquipoPolicy;
+use App\Policies\equipoPolicy;
 use App\Policies\EstadioPolicy;
 
 class AuthServiceProvider extends ServiceProvider

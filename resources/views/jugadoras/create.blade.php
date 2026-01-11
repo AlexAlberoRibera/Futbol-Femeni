@@ -19,12 +19,12 @@
     @csrf
 
     <div>
-        <label class="block font-medium mb-1">Nombre:</label>
+        <label class="block font-medium mb-1">nombre:</label>
         <input type="text" name="nombre" value="{{ old('nombre') }}" class="w-full border p-2 rounded" required>
     </div>
 
     <div>
-        <label class="block font-medium mb-1">Equipo:</label>
+        <label class="block font-medium mb-1">equipo:</label>
         <select name="equipo_id" class="w-full border p-2 rounded" required>
             <option value="">Selecciona un equipo</option>
             @foreach($equipos as $equipo)

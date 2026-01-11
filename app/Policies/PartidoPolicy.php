@@ -14,7 +14,7 @@ class PartidoPolicy
         }
     }
 
-    // Només l'àrbitre assignat pot modificar el resultat
+    // nombreés l'àrbitre assignat pot modificar el resultat
     public function updateResult(User $user, Partido $partido)
     {
         return $user->isArbitre() && $partido->arbitro_id === $user->id;

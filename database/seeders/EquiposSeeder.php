@@ -7,7 +7,7 @@ use App\Models\Estadio;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class EquiposSeeder extends Seeder
+class equiposSeeder extends Seeder
 {
     public function run(): void
     {
@@ -17,21 +17,21 @@ class EquiposSeeder extends Seeder
         $wanda = Estadio::where('nombre', 'Wanda Metropolitano')->firstOrFail();
         $bernabeu = Estadio::where('nombre', 'Santiago Bernabéu')->firstOrFail();
 
-        Equipo::create([
+        equipo::create([
             'nombre' => 'Barça Femení',
             'titulos' => 30,
             'estadio_id' => $campoNuevo->id,
             'user_id' => $admin->id,
         ]);
 
-        Equipo::create([
+        equipo::create([
             'nombre' => 'Atlètic de Madrid',
             'titulos' => 10,
             'estadio_id' => $wanda->id,
             'user_id' => $admin->id,
         ]);
 
-        Equipo::create([
+        equipo::create([
             'nombre' => 'Real Madrid Femení',
             'titulos' => 5,
             'estadio_id' => $bernabeu->id,

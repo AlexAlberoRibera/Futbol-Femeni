@@ -17,10 +17,10 @@
 <table class="min-w-full bg-white border border-gray-300 rounded shadow">
     <thead class="bg-blue-100">
         <tr>
-            <th class="py-2 px-4 text-left">Nombre</th>
+            <th class="py-2 px-4 text-left">nombre</th>
             <th class="py-2 px-4 text-left">Ciudad</th>
             <th class="py-2 px-4 text-left">Capacidad</th>
-            <th class="py-2 px-4 text-left">Equipo Principal</th>
+            <th class="py-2 px-4 text-left">equipo Principal</th>
         </tr>
     </thead>
     <tbody>

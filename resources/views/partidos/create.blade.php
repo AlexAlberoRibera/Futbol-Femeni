@@ -18,7 +18,7 @@
     @csrf
 
     <div>
-        <label class="block font-medium mb-1">Equipo Local:</label>
+        <label class="block font-medium mb-1">equipo Local:</label>
         <select name="local_id" class="w-full border p-2 rounded" required>
             <option value="">Selecciona un equipo</option>
             @foreach($equipos as $equipo)
@@ -30,7 +30,7 @@
     </div>
 
     <div>
-        <label class="block font-medium mb-1">Equipo Visitante:</label>
+        <label class="block font-medium mb-1">equipo Visitante:</label>
         <select name="visitante_id" class="w-full border p-2 rounded" required>
             <option value="">Selecciona un equipo</option>
             @foreach($equipos as $equipo)

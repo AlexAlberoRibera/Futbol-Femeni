@@ -8,7 +8,7 @@
     <h2 class="text-2xl font-semibold text-blue-800 mb-2">{{ $estadio['nombre'] }}</h2>
     <p class="mb-1"><strong>Ciudad:</strong> {{ $estadio['ciudad'] }}</p>
     <p class="mb-1"><strong>Capacidad:</strong> {{ $estadio['capacidad'] }}</p>
-    <p class="mb-1"><strong>Equipo Principal:</strong> {{ $estadio['equipo_principal'] }}</p>
+    <p class="mb-1"><strong>equipo Principal:</strong> {{ $estadio['equipo_principal'] }}</p>
 </div>
 
 <p class="mt-4">

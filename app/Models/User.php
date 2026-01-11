@@ -49,4 +49,8 @@ class User extends Authenticatable
     {
         return $this->role === self::ROLE_ARBITRE;
     }
+    public function equipo()
+{
+    return $this->belongsTo(equipo::class, 'team_id');
+}
 }

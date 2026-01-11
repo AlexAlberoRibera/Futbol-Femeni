@@ -6,14 +6,14 @@ use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\EstadioController;
 use App\Http\Controllers\JugadoraController;
 use App\Http\Controllers\PartidoController;
-
+use App\Http\Controllers\ClasificacionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
 
-// Pàgina inicial
+// Página inicial
 Route::get('/', function () {
     return view('welcome');
 });
@@ -30,22 +30,30 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Autentificación Breeze
+// Autenticación Breeze
 require __DIR__ . '/auth.php';
 
 // Rutas protegidas con autenticación
 Route::middleware('auth')->group(function () {
 
+    // equipos
     Route::resource('equipos', EquipoController::class);
     Route::get('/equipos/{equipo}/jugadoras', [EquipoController::class, 'jugadoras'])
         ->name('equipos.jugadoras');
+
+    // Jugadoras
     Route::resource('jugadoras', JugadoraController::class);
 
+    // Partidos
     Route::get('partidos', [PartidoController::class, 'index'])->name('partidos.index');
-
-    // Solo actualitza resultados (solo arbitru asignado o admin)
     Route::put('partidos/{partido}/update-result', [PartidoController::class, 'updateResult'])
         ->name('partidos.updateResult');
+
+    // Estadios
     Route::resource('estadios', EstadioController::class);
+
+  Route::get('/clasificacion', [ClasificacionController::class, 'index'])
+    ->middleware('auth')
+    ->name('clasificacion.index');
 
 });

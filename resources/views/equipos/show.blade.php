@@ -4,8 +4,8 @@
 @section('content')
 <h1 class="text-3xl font-bold text-blue-800 mb-4">{{ $equipo->nombre }}</h1>
 
-@if($equipo->escut)
-    <img src="{{ asset('storage/' . $equipo->escut) }}" 
+@if($equipo->escudo)
+    <img src="{{ asset('storage/' . $equipo->escudo) }}" 
          alt="Escudo {{ $equipo->nombre }}" 
          class="w-24 h-24 object-contain mb-4">
 @endif

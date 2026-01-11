@@ -10,7 +10,7 @@
     <p class="text-gray-500 mb-4">Foto no disponible</p>
 @endif
 
-<p><strong>Equipo:</strong> 
+<p><strong>equipo:</strong> 
     <a href="{{ route('equipos.show', $jugadora->equipo->id) }}" class="text-blue-700 hover:underline">
         {{ $jugadora->equipo->nombre }}
     </a>
@@ -23,7 +23,7 @@
         Listado de Jugadoras
     </a>
     <a href="{{ route('equipos.show', $jugadora->equipo->id) }}" class="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700">
-        Ver los datos del Equipo
+        Ver los datos del equipo
     </a>
 </div>
 @endsection

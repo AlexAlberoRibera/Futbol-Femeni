@@ -1,8 +1,8 @@
 @extends('layouts.equipo')
-@section('title', 'Nuevo Equipo')
+@section('title', 'Nuevo equipo')
 
 @section('content')
-<h1 class="text-3xl font-bold text-blue-800 mb-6">Añadir Nuevo Equipo</h1>
+<h1 class="text-3xl font-bold text-blue-800 mb-6">Añadir Nuevo equipo</h1>
 
 {{-- Mensajes de error --}}
 @if($errors->any())
@@ -19,7 +19,7 @@
     @csrf
 
     <div>
-        <label class="block font-medium mb-1">Nombre:</label>
+        <label class="block font-medium mb-1">nombre:</label>
         <input type="text" name="nombre" value="{{ old('nombre') }}" class="w-full border p-2 rounded" required>
     </div>
 
@@ -42,7 +42,7 @@
 
     <div>
         <label class="block font-medium mb-1">Escudo (PNG/JPG, máximo 2 MB):</label>
-        <input type="file" name="escut" accept="image/png, image/jpeg" class="w-full border p-2 rounded" id="escut">
+        <input type="file" name="escudo" accept="image/png, image/jpeg" class="w-full border p-2 rounded" id="escudo">
         <img id="preview" src="#" class="mt-2 w-24 h-24 object-contain hidden" alt="Vista previa del escudo">
     </div>
 
@@ -54,7 +54,7 @@
 
 {{-- Script para previsualizar la imagen --}}
 <script>
-document.getElementById('escut').addEventListener('change', function(event){
+document.getElementById('escudo').addEventListener('change', function(event){
     const [file] = event.target.files;
     if(file){
         const preview = document.getElementById('preview');

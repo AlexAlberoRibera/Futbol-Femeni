@@ -17,7 +17,7 @@ class JugadoraController extends Controller
    public function create()
 {
     $this->authorize('create', Jugadora::class); // Solo managers o admin
-    $equipos = Equipo::all();
+    $equipos = equipo::all();
     $posiciones = ['Portera', 'Defensa', 'Mediocampista', 'Delantera'];
     return view('jugadoras.create', compact('equipos', 'posiciones'));
 }

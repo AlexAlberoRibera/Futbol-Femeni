@@ -2,67 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Equipo;
 use App\Models\Estadio;
-use Illuminate\Support\Facades\Auth;
+use App\Services\EquipoService;
+use App\Http\Requests\StoreEquipoRequest;
+use App\Http\Requests\UpdateEquipoRequest;
 
 class EquipoController extends Controller
 {
-    /**
-     * Mostrar todos los equipos
-     */
+    public function __construct(private EquipoService $service)
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $equipos = Equipo::with('estadio')->get();
+
         return view('equipos.index', compact('equipos'));
     }
 
-    /**
-     * Mostrar un equipo
-     */
-    public function show(int $id)
-    {
-        $equipo = Equipo::with(['estadio', 'partidosComoLocal', 'partidosComoVisitante'])
-            ->findOrFail($id);
-
-        return view('equipos.show', compact('equipo'));
-    }
-
-    /**
-     * Formulario para crear un nuevo equipo
-     */
     public function create()
     {
         $estadios = Estadio::all();
         return view('equipos.create', compact('estadios'));
     }
 
-    /**
-     * Guardar un nuevo equipo
-     */
-    public function store(Request $request)
+    public function store(StoreEquipoRequest $request)
     {
-        $validated = $request->validate([
-            'nombre' => 'required|min:3',
-            'estadio_id' => 'required|exists:estadios,id',
-            'titulos' => 'required|integer|min:0',
-            'escut' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-        ]);
+        $this->service->store($request->validated());
 
-        $path = null;
-        if ($request->hasFile('escut')) {
-            $path = $request->file('escut')->store('equipos', 'public');
-        }
+        return redirect()->route('equipos.index')
+            ->with('success', 'Equipo creado correctamente.');
+    }
 
-        Equipo::create([
-            'nombre' => $validated['nombre'],
-            'estadio_id' => $validated['estadio_id'],
-            'titulos' => $validated['titulos'],
-            'user_id' => Auth::id(),
-            'escut' => $path,
-        ]);
+    public function edit(Equipo $equipo)
+    {
+        $estadios = Estadio::all();
+        return view('equipos.edit', compact('equipo', 'estadios'));
+    }
 
-        return redirect()->route('equipos.index')->with('success', 'Equipo añadido correctamente!');
+    public function update(UpdateEquipoRequest $request, Equipo $equipo)
+    {
+        $this->service->update($equipo, $request->validated());
+
+        return redirect()->route('equipos.index')
+            ->with('success', 'Equipo actualizado correctamente.');
+    }
+    public function destroy(Equipo $equipo)
+    {
+        $this->service->delete($equipo);
+
+        return redirect()->route('equipos.index')
+            ->with('success', 'Equipo eliminado correctamente.');
     }
 }

@@ -8,7 +8,7 @@
     <table class="w-full border-collapse border border-gray-300">
         <thead class="bg-gray-200">
             <tr>
-                <th class="border border-gray-300 p-2">Nombre</th>
+                <th class="border border-gray-300 p-2">nombre</th>
                 <th class="border border-gray-300 p-2">Posición</th>
                 <th class="border border-gray-300 p-2">Dorsal</th>
                 <th class="border border-gray-300 p-2">Goles</th>

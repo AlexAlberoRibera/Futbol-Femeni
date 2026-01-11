@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Equipo extends Component
+class equipo extends Component
 {
     public $nombre;
     public $estadio;
