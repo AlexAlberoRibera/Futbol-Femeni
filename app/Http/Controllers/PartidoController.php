@@ -15,9 +15,13 @@ class PartidoController extends Controller
     }
 
     public function updateResult(PartitRequest $request, Partido $partido)
-{
-    $partido->update(['resultado' => $request->resultado]);
+    {
+        $partido->update(['resultado' => $request->resultado]);
 
-    return redirect()->route('partidos.index')->with('success', 'Resultado actualizado');
-}
+        return redirect()->route('partidos.index')->with('success', 'Resultado actualizado');
+    }
+    public function historic()
+    {
+        return view('partidos.historico');
+    }
 }

@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::resource('partidos', PartidoController::class);
     });
+    Route::get('/historic', [PartidoController::class, 'historic'])->name('partidos.historic');
+
 
     // Estadios
     Route::resource('estadios', EstadioController::class);
