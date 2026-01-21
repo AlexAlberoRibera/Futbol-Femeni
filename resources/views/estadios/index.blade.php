@@ -17,20 +17,29 @@
 <table class="min-w-full bg-white border border-gray-300 rounded shadow">
     <thead class="bg-blue-100">
         <tr>
-            <th class="py-2 px-4 text-left">nombre</th>
+            <th class="py-2 px-4 text-left">Nombre</th>
             <th class="py-2 px-4 text-left">Ciudad</th>
             <th class="py-2 px-4 text-left">Capacidad</th>
-            <th class="py-2 px-4 text-left">equipo Principal</th>
+            <th class="py-2 px-4 text-left">Equipo Principal</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($estadios as $estadio)
-            <x-estadio 
-                :nombre="$estadio['nombre']"
-                :ciudad="$estadio['ciudad']"
-                :capacidad="$estadio['capacidad']"
-                :equipo-principal="$estadio['equipo_principal']"
-            />
+            <tr class="hover:bg-gray-100">
+                <td class="border px-4 py-2">{{ $estadio->nombre }}</td>
+                <td class="border px-4 py-2">{{ $estadio->ciudad }}</td>
+                <td class="border px-4 py-2">{{ $estadio->capacidad }}</td>
+                <td class="border px-4 py-2">
+                    @if($estadio->equipoPrincipal)
+                        <a href="{{ route('equipos.show', $estadio->equipoPrincipal->id) }}" 
+                           class="text-blue-600 hover:underline">
+                           {{ $estadio->equipoPrincipal->nombre }}
+                        </a>
+                    @else
+                        <span class="text-gray-500">Sin equipo asignado</span>
+                    @endif
+                </td>
+            </tr>
         @endforeach
     </tbody>
 </table>

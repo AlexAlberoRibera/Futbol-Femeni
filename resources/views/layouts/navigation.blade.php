@@ -24,13 +24,24 @@
                     <x-nav-link :href="route('jugadoras.index')" :active="request()->routeIs('jugadoras.*')">
                         {{ __('Guia de jugadoras') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('partidos.index')" :active="request()->routeIs('partidos.*')">
-                        {{ __('Listado de Partidos') }}
+                     <x-nav-link :href="route('partidos.historico')"
+                        :active="request()->routeIs('partidos.historico')">
+                        {{ __('Partidos') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('partidos.calendario')" :active="request()->routeIs('partidos.calendario')">
+                        {{ __('Calendario') }}
                     </x-nav-link>
                     <x-nav-link :href="route('clasificacion.index')"
                         :active="request()->routeIs('clasificacion.index')">
                         {{ __('Clasificación') }}
                     </x-nav-link>
+                   
+                    {{--
+                   <x-nav-link :href="route('partidos.index')" :active="request()->routeIs('partidos.*')">
+                        {{ __('Listado de Partidos') }}
+                    </x-nav-link>
+                    --}}
+
 
                 </div>
             </div>

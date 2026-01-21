@@ -15,24 +15,22 @@
 <form action="{{ route('estadios.store') }}" method="POST" class="space-y-4">
     @csrf
     <div>
-        <label for="nombre" class="block font-medium mb-1">nombre:</label>
+        <label for="nombre" class="block font-medium mb-1">Nombre:</label>
         <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" class="w-full border p-2 rounded" required>
     </div>
     <div>
         <label for="ciudad" class="block font-medium mb-1">Ciudad:</label>
-        <input type="text" name="ciudad" id="ciudad" value="{{ old('ciudad') }}" class="w-full border p-2 rounded" required>
+        <input type="text" name="ciudad" id="ciudad" value="{{ old('ciudad') }}" class="w-full border p-2 rounded">
     </div>
     <div>
         <label for="capacidad" class="block font-medium mb-1">Capacidad:</label>
-        <input type="number" name="capacidad" id="capacidad" value="{{ old('capacidad') }}" class="w-full border p-2 rounded" required>
+        <input type="number" name="capacidad" id="capacidad" value="{{ old('capacidad') }}" class="w-full border p-2 rounded">
     </div>
-    <div>
-        <label for="equipo_principal" class="block font-medium mb-1">equipo Principal:</label>
-        <input type="text" name="equipo_principal" id="equipo_principal" value="{{ old('equipo_principal') }}" class="w-full border p-2 rounded" required>
-    </div>
+
     <div class="flex space-x-2 mt-4">
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Guardar</button>
         <a href="{{ route('estadios.index') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Cancelar</a>
     </div>
 </form>
+
 @endsection

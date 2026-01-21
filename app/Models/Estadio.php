@@ -13,11 +13,12 @@ class Estadio extends Model
         'nombre',
         'ciudad',
         'capacidad',
+        'equipo_principal_id', // si existe la columna FK
     ];
 
-    // Relación: un estadio tiene muchos equipos
-    public function equipos()
+    // Relación con equipo (opcional)
+    public function equipoPrincipal()
     {
-        return $this->hasMany(equipo::class);
+        return $this->belongsTo(Equipo::class, 'equipo_principal_id');
     }
 }

@@ -15,18 +15,31 @@ class Partido extends Model
         'visitante_id',
         'fecha',
         'resultado',
-        'arbitre_id', // si quieres controlar quién modifica
+        'arbitro_id', // id del árbitro asignado
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'fecha' => 'datetime',
+        ];
+    }
 
     // equipo local
     public function local()
     {
-        return $this->belongsTo(equipo::class, 'local_id');
+        return $this->belongsTo(Equipo::class, 'local_id');
     }
 
     // equipo visitante
     public function visitante()
     {
-        return $this->belongsTo(equipo::class, 'visitante_id');
+        return $this->belongsTo(Equipo::class, 'visitante_id');
+    }
+
+    // árbitro asignado
+    public function arbitro()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'arbitro_id');
     }
 }

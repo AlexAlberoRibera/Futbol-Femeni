@@ -15,7 +15,7 @@ class EnviarCorreosArbitros extends Command
 
     public function handle()
     {
-        $arbitros = User::where('role', 'arbitro')->get();
+        $arbitros = User::where('role', User::ROLE_ARBITRE)->get();
 
         foreach ($arbitros as $arbitro) {
             $partidos = Partido::where('arbitro_id', $arbitro->id)

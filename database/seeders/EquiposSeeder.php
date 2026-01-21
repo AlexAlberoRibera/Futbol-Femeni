@@ -7,32 +7,41 @@ use App\Models\Estadio;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class equiposSeeder extends Seeder
+class EquiposSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = User::where('role', User::ROLE_ADMIN)->firstOrFail();
+        $admin = User::where('role', User::ROLE_ADMIN)->first();
 
-        $campoNuevo = Estadio::where('nombre', 'Campo Nuevo')->firstOrFail();
-        $wanda = Estadio::where('nombre', 'Wanda Metropolitano')->firstOrFail();
-        $bernabeu = Estadio::where('nombre', 'Santiago Bernabéu')->firstOrFail();
+        if (!$admin) {
+            // Si no hay admin, lo creamos rápido
+            $admin = User::create([
+                'name' => 'Admin',
+                'email' => 'admin@futbol.com',
+                'password' => bcrypt('password'),
+                'role' => User::ROLE_ADMIN,
+            ]);
+        }
 
-        equipo::create([
-            'nombre' => 'Barça Femení',
+        // Ahora buscamos los estadios creados antes
+        $campoNuevo = Estadio::where('nombre', 'Campo Nuevo')->first();
+        $wanda = Estadio::where('nombre', 'Wanda Metropolitano')->first();
+        $bernabeu = Estadio::where('nombre', 'Santiago Bernabéu')->first();
+
+        // Creamos equipos con firstOrCreate para no duplicar
+        Equipo::firstOrCreate(['nombre' => 'Barça Femení'], [
             'titulos' => 30,
             'estadio_id' => $campoNuevo->id,
             'user_id' => $admin->id,
         ]);
 
-        equipo::create([
-            'nombre' => 'Atlètic de Madrid',
+        Equipo::firstOrCreate(['nombre' => 'Atlètic de Madrid'], [
             'titulos' => 10,
             'estadio_id' => $wanda->id,
             'user_id' => $admin->id,
         ]);
 
-        equipo::create([
-            'nombre' => 'Real Madrid Femení',
+        Equipo::firstOrCreate(['nombre' => 'Real Madrid Femení'], [
             'titulos' => 5,
             'estadio_id' => $bernabeu->id,
             'user_id' => $admin->id,

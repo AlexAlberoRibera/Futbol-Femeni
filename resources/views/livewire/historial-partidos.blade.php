@@ -12,19 +12,17 @@
                 <th class="py-2 px-4">Local</th>
                 <th class="py-2 px-4">Visitante</th>
                 <th class="py-2 px-4">Resultado</th>
-                <th class="py-2 px-4">Estadio</th>
-                <th class="py-2 px-4">Árbitre</th>
+                <th class="py-2 px-4">Árbitro</th>
             </tr>
         </thead>
         <tbody>
             @foreach($partidos as $partido)
             <tr class="hover:bg-gray-100">
-                <td class="border px-2 py-1">{{ $partido->fecha }}</td>
+                <td class="border px-2 py-1">{{ $partido->fecha->format('d/m/Y H:i') }}</td>
                 <td class="border px-2 py-1">{{ $partido->local->nombre }}</td>
                 <td class="border px-2 py-1">{{ $partido->visitante->nombre }}</td>
                 <td class="border px-2 py-1">{{ $partido->resultado ?? '-' }}</td>
-                <td class="border px-2 py-1">{{ $partido->estadio->nombre }}</td>
-                <td class="border px-2 py-1">{{ $partido->arbitre->name }}</td>
+                <td class="border px-2 py-1">{{ $partido->arbitro->name ?? 'Sin asignar' }}</td>
             </tr>
             @endforeach
         </tbody>

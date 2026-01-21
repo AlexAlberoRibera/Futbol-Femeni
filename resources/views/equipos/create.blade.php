@@ -9,7 +9,7 @@
 <div class="bg-red-100 text-red-700 p-2 mb-4 rounded">
     <ul class="list-disc pl-5">
         @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
+        <li>{{ $error }}</li>
         @endforeach
     </ul>
 </div>
@@ -28,11 +28,13 @@
         <select name="estadio_id" class="w-full border p-2 rounded" required>
             <option value="">Selecciona un estadio</option>
             @foreach($estadios as $estadio)
-                <option value="{{ $estadio->id }}" {{ old('estadio_id') == $estadio->id ? 'selected' : '' }}>
-                    {{ $estadio->nombre }}
-                </option>
+            <option value="{{ $estadio->id }}" {{ old('estadio_id') == $estadio->id ? 'selected' : '' }}>
+                {{ $estadio->nombre }}
+            </option>
             @endforeach
         </select>
+
+
     </div>
 
     <div>
@@ -54,13 +56,13 @@
 
 {{-- Script para previsualizar la imagen --}}
 <script>
-document.getElementById('escudo').addEventListener('change', function(event){
-    const [file] = event.target.files;
-    if(file){
-        const preview = document.getElementById('preview');
-        preview.src = URL.createObjectURL(file);
-        preview.classList.remove('hidden');
-    }
-});
+    document.getElementById('escudo').addEventListener('change', function(event) {
+        const [file] = event.target.files;
+        if (file) {
+            const preview = document.getElementById('preview');
+            preview.src = URL.createObjectURL(file);
+            preview.classList.remove('hidden');
+        }
+    });
 </script>
 @endsection

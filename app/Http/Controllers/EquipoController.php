@@ -24,16 +24,35 @@ class EquipoController extends Controller
 
     public function create()
     {
-        $estadios = Estadio::all();
+        $estadios = Estadio::all(); // Trae todos los estadios de la BD
         return view('equipos.create', compact('estadios'));
+    }
+
+    public function show(Equipo $equipo)
+    {
+        return view('equipos.show', compact('equipo'));
     }
 
     public function store(StoreEquipoRequest $request)
     {
-        $this->service->store($request->validated());
+        $data = $request->validated();
 
-        return redirect()->route('equipos.index')
-            ->with('success', 'Equipo creado correctamente.');
+        // Guardar el escudo si se sube
+        if ($request->hasFile('escudo')) {
+            $data['escudo'] = $request->file('escudo')->store('escudos', 'public');
+        }
+
+        // Crear el equipo
+        $equipo = Equipo::create($data);
+
+        // Actualizar el estadio para que apunte a este equipo
+        $estadio = Estadio::find($data['estadio_id']);
+        if ($estadio) {
+            $estadio->equipo_principal_id = $equipo->id;
+            $estadio->save();
+        }
+
+        return redirect()->route('equipos.index')->with('success', 'Equipo creado correctamente.');
     }
 
     public function edit(Equipo $equipo)

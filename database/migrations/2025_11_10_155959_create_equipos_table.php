@@ -6,25 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('estadios', function (Blueprint $table) {
+        Schema::create('equipos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('ciudad'); // agrega esta línea
-            $table->integer('capacidad');
+            $table->integer('titulos')->default(0);
+
+            // FK a estadios
+            $table->foreignId('estadio_id')->nullable()->constrained()->onDelete('set null');
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('estadios');
+        Schema::dropIfExists('equipos');
     }
 };

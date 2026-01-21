@@ -7,23 +7,18 @@ use App\Http\Controllers\EstadioController;
 use App\Http\Controllers\JugadoraController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\ClasificacionController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
 
 // Página inicial
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Dashboard protegido con autenticación y verificación
+// Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Perfil de usuario
+// Perfil
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -33,10 +28,10 @@ Route::middleware('auth')->group(function () {
 // Autenticación Breeze
 require __DIR__ . '/auth.php';
 
-// Rutas protegidas con autenticación
+// Rutas protegidas
 Route::middleware('auth')->group(function () {
 
-    // equipos
+    // Equipos
     Route::resource('equipos', EquipoController::class);
     Route::get('/equipos/{equipo}/jugadoras', [EquipoController::class, 'jugadoras'])
         ->name('equipos.jugadoras');
@@ -44,17 +39,17 @@ Route::middleware('auth')->group(function () {
     // Jugadoras
     Route::resource('jugadoras', JugadoraController::class);
 
-    // Partidos
-    Route::middleware('auth')->group(function () {
-        Route::resource('partidos', PartidoController::class);
-    });
-    Route::get('/historic', [PartidoController::class, 'historic'])->name('partidos.historic');
-
+    // Partidos - Rutas específicas ANTES del resource
+    Route::get('partidos/historico', [PartidoController::class, 'historic'])
+        ->name('partidos.historico');
+    Route::get('calendario', [PartidoController::class, 'calendario'])
+        ->name('partidos.calendario');
+    Route::resource('partidos', PartidoController::class);
 
     // Estadios
     Route::resource('estadios', EstadioController::class);
 
+    // Clasificación
     Route::get('/clasificacion', [ClasificacionController::class, 'index'])
-        ->middleware('auth')
         ->name('clasificacion.index');
 });

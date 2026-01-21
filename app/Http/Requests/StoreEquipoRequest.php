@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth; 
-class StoreequipoRequest extends FormRequest
+class StoreEquipoRequest extends FormRequest
 {
    public function authorize(): bool
 {

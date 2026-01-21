@@ -3,21 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Estadio;
 
 class EstadioController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        // Cargar los estadios desde la sesión o inicializarlos si no existen
-        $estadios = $request->session()->get('estadios', [
-            ['nombre' => 'Estadio Johan Cruyff', 'ciudad' => 'Sant Joan Despí', 'capacidad' => 6000, 'equipo_principal' => 'FC Barcelona Femenino'],
-            ['nombre' => 'Centro Deportivo Wanda Alcalá de Henares', 'ciudad' => 'Alcalá de Henares', 'capacidad' => 2800, 'equipo_principal' => 'Atlético de Madrid Femenino'],
-            ['nombre' => 'Estadio Alfredo Di Stéfano', 'ciudad' => 'Madrid', 'capacidad' => 6000, 'equipo_principal' => 'Real Madrid Femenino'],
-        ]);
-
-        // Guardar los estadios en la sesión (por si es la primera carga)
-        $request->session()->put('estadios', $estadios);
-
+        $estadios = Estadio::all(); // Trae todos los estadios de la BD
         return view('estadios.index', compact('estadios'));
     }
 
@@ -26,25 +18,18 @@ class EstadioController extends Controller
         return view('estadios.create');
     }
 
-    public function store(Request $request)
-    {
-        // Validar los datos del formulario
-        $validated = $request->validate([
-            'nombre' => 'required|min:3',
-            'ciudad' => 'required|min:2',
-            'capacidad' => 'required|integer|min:0',
-            'equipo_principal' => 'required|min:3'
-        ], [
-            'required' => 'El campo :attribute es obligatorio.',
-            'min' => 'El campo :attribute debe tener al menos :min caracteres.',
-            'integer' => 'El campo :attribute debe ser un número entero.'
-        ]);
+   public function store(Request $request)
+{
+    $validated = $request->validate([
+        'nombre' => 'required|string|max:255',
+        'ciudad' => 'nullable|string|max:255',
+        'capacidad' => 'nullable|integer',
+    ]);
 
-        // Añadir el nuevo estadio a la sesión
-        $estadios = $request->session()->get('estadios', []);
-        $estadios[] = $validated;
-        $request->session()->put('estadios', $estadios);
+    Estadio::create($validated); // ← esto guarda en la base
 
-        return redirect()->route('estadios.index')->with('success', 'Estadio añadido correctamente.');
-    }
+    return redirect()->route('estadios.index')
+        ->with('success', 'Estadio creado correctamente');
+}
+
 }
