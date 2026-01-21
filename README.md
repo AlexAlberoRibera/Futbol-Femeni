@@ -1,59 +1,151 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🧠 Laravel - Cheat Sheet (Dentro del Contenedor Sail)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🚀 Acceso al contenedor
 
-## About Laravel
+```bash
+./vendor/bin/sail root-shell
+# Una vez dentro, usar directamente:
+php artisan ...
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🗄️ Base de datos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Migraciones
 
-## Learning Laravel
+```bash
+php artisan migrate                  # Ejecutar todas las migraciones
+php artisan migrate:fresh --seed      # Borrar todas las tablas y ejecutar seeders
+php artisan migrate:rollback           # Deshacer la última migración
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Seeders
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+php artisan db:seed                    # Ejecutar seeders
+```
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🧱 Generadores
 
-### Premium Partners
+### Modelos + Migraciones
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+php artisan make:model Equipo -m
+php artisan make:model Estadio -m
+php artisan make:model Partido -m
+php artisan make:model Jugadora -m
+```
 
-## Contributing
+### Controladores
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+php artisan make:controller EquipoController --resource
+php artisan make:controller EstadioController --resource
+php artisan make:controller PartidoController --resource
+php artisan make:controller JugadoraController --resource
+```
 
-## Code of Conduct
+### Form Requests
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan make:request StoreEquipoRequest
+php artisan make:request StoreEstadioRequest
+php artisan make:request PartidoRequest
+```
 
-## Security Vulnerabilities
+### Policies y Autorización
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan make:policy EquipoPolicy --model=Equipo
+php artisan make:provider AuthServiceProvider
+```
 
-## License
+### Livewire
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan make:livewire HistorialPartidos
+```
+
+---
+
+## 🧪 Debug y desarrollo
+
+```bash
+php artisan tinker         # Consola interactiva
+php artisan --version      # Versión de Laravel
+php artisan list           # Lista de todos los comandos
+```
+
+---
+
+## 🧹 Caché y optimización
+
+```bash
+php artisan optimize:clear  # Limpiar todo
+php artisan view:clear       # Limpiar caché de vistas
+php artisan route:clear      # Limpiar caché de rutas
+php artisan config:clear     # Limpiar caché de configuración
+php artisan optimize         # Recompilar cachés
+```
+
+---
+
+## 🧭 Rutas
+
+```bash
+php artisan route:list                  # Listar todas las rutas
+php artisan route:list --name=partidos  # Filtrar por nombre
+php artisan route:list --path=estadios  # Filtrar por ruta
+```
+
+---
+
+## 🧑‍💻 Usuarios y Roles (en Tinker)
+
+```php
+\App\Models\User::create([
+    'name' => 'Admin',
+    'email' => 'admin@admin.com',
+    'password' => bcrypt('password'),
+    'role' => 'admin'
+]);
+
+$user = \App\Models\User::first();
+$user->role = 'admin';
+$user->save();
+```
+
+---
+
+## 🛠️ Mantenimiento
+
+```bash
+php artisan down   # Activar modo mantenimiento
+php artisan up     # Desactivar modo mantenimiento
+```
+
+---
+
+## 📁 Storage
+
+```bash
+php artisan storage:link   # Crear enlace simbólico para almacenamiento
+```
+
+---
+
+## 🔄 Flujo típico de limpieza y trabajo
+
+```bash
+php artisan migrate:fresh --seed # Reinicia la base de datos y carga los seeders.
+php artisan optimize:clear #Limpia todas las cachés para evitar errores de configuración o rutas.
+php artisan storage:link #Crea el enlace simbólico necesario para acceder a archivos públicos.
+php artisan route:list #Verifica que todas las rutas estén cargadas correctamente.
+```
+
+---
+
+##
