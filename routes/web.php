@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\EstadioController;
-use App\Http\Controllers\JugadoraController;
+//use App\Http\Controllers\JugadoraController;
 use App\Http\Controllers\PartidoController;
 use App\Http\Controllers\ClasificacionController;
 
@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
         ->name('equipos.jugadoras');
 
     // Jugadoras
-    Route::resource('jugadoras', JugadoraController::class);
+ //   Route::resource('jugadoras', JugadoraController::class);
 
     // Partidos - Rutas específicas ANTES del resource
     Route::get('partidos/historico', [PartidoController::class, 'historic'])
