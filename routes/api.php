@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\JugadoraController;
 use App\Http\Controllers\Api\EstadioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Api\EquipoController;
+use App\Http\Controllers\Api\PartidoController;
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
@@ -20,6 +21,9 @@ Route::get('estadios/{estadio}', [EstadioController::class, 'show']);
 
 Route::get('equipos', [EquipoController::class, 'index']);
 Route::get('equipos/{equipo}', [EquipoController::class, 'show']);
+
+Route::get('partidos', [PartidoController::class, 'index']);
+Route::get('partidos/{partido}', [PartidoController::class, 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
@@ -35,6 +39,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('equipos', [EquipoController::class, 'store']);
     Route::put('equipos/{equipo}', [EquipoController::class, 'update']);
     Route::delete('equipos/{equipo}', [EquipoController::class, 'destroy']);
+
+     Route::post('partidos', [PartidoController::class, 'store']);
+    Route::put('partidos/{partido}', [PartidoController::class, 'updateResultado']);
+    Route::delete('partidos/{partido}', [PartidoController::class, 'destroy']);
+
+    
 
     Route::get('user', [ProfileController::class, 'show']);
 });
