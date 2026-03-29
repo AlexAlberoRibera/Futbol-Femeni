@@ -1,0 +1,10 @@
+{
+  "name": "Laravel 12 + PHP 8.2",
+  "image": "mcr.microsoft.com/devcontainers/php:8.2",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    }
+  },
+  "postCreateCommand": "composer install || true"
+}
